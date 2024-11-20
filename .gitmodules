@@ -1,0 +1,3 @@
+[submodule "linux-app"]
+	path = linux-app
+	url = https://github.com/Carlosuca/react-app-linux.git
