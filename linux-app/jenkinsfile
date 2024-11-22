@@ -24,7 +24,7 @@ pipeline {
                 script {
             
                     sh 'echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin'
-                    sh 'docker push linuxapp:latest'
+                    docker.image('linuxapp:latest').push('latest')
                 }
                 sh 'docker pull carlosm011/linuxapp:latest && docker run -d -p 80:80 carlosm011/linuxapp:latest'
             }
