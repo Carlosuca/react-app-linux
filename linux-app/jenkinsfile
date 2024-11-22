@@ -24,7 +24,7 @@ pipeline {
                 script {
                     // Autenticación con Docker Hub
                     echo "Autenticando en Docker Hub..."
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credentials') {
+                    docker.withRegistry('https://registry.hub.docker.com', 'carlosm11') {
                         echo "Pushing imagen al registro Docker Hub..."
                         docker.image('linuxapp:latest').push('latest')
                     }   
