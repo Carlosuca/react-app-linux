@@ -24,7 +24,7 @@ pipeline {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credentials') {
                         echo 'Autenticado con Docker Hub'
-                        docker.image('carlosm011/linuxapp:latest').push('latest')
+                        docker.image('linuxapp:latest').push('latest')
                     }
                 }
                 sh 'docker pull carlosm011/linuxapp:latest && docker run -d -p 80:80 carlosm011/linuxapp:latest'
