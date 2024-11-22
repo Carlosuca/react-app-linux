@@ -14,18 +14,9 @@ pipeline {
                 }
             }
         }
-        stage('Test') {
-            parallel {
-                stage('Unit Tests') {
-                    steps {
-                        sh 'npm run test:unit'
-            }
-        }
-        stage('Integration Tests') {
-                    steps {
-                        sh 'npm run test:integration'
-                    }
-                }
+        stage('Run Tests') {
+            steps {
+                sh 'docker run --rm linuxapp:latest npm test'
             }
         }
         stage('Deploy to DigitalOcean') {
