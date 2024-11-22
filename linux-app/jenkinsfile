@@ -22,11 +22,25 @@ pipeline {
         stage('Deploy to DigitalOcean') {
             steps {
                 script {
+                    // Autenticación con Docker Hub
+                    echo "Autenticando en Docker Hub..."
                     docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credentials') {
+                        echo "Pushing imagen al registro Docker Hub..."
                         docker.image('linuxapp:latest').push('latest')
-                    }
+                    }   
                 }
-                sh 'docker pull carlosm11/linuxapp:latest && docker run -d -p 80:80 carlosm11/linuxapp:latest'
+
+                // Verificar si Docker está correctamente configurado
+                echo "Verificando configuración de Docker en el droplet..."
+                sh 'docker version'
+
+                // Pull y despliegue
+                echo "Pull de la imagen en el servidor y despliegue..."
+            sh '''
+            docker pull carlosm11/linuxapp:latest || exit 1
+            docker stop $(docker ps -q --filter "ancestor=carlosm11/linuxapp:latest") || true
+            docker run -d -p 80:80 --name linuxapp carlosm11/linuxapp:latest || exit 1
+            ''' 
             }
         }
     }
