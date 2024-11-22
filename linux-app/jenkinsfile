@@ -1,0 +1,33 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone repository') {
+            steps {
+                git credentialsId: 'Carlosuca', url: 'https://github.com/Carlosuca/react-app-linux.git'
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    docker.build('linuxapp:latest')
+                }
+            }
+        }
+        stage('Run Tests') {
+            steps {
+                sh 'docker run --rm linuxapp:latest npm test'
+            }
+        }
+        stage('Deploy to DigitalOcean') {
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credentials') {
+                        docker.image('linuxapp:latest').push('latest')
+                    }
+                }
+                sh 'docker pull carlosm11/linuxapp:latest && docker run -d -p 80:80 carlosm11/linuxapp:latest'
+            }
+        }
+    }
+}
