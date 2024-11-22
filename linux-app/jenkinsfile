@@ -22,7 +22,7 @@ pipeline {
         stage('Deploy to DigitalOcean') {
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credentials') {
+                    docker.withRegistry('https://registry.hub.docker.com/carlosm011', 'dockerhub-credentials') {
                         echo 'Autenticado con Docker Hub'
                         docker.image('linuxapp:latest').push('latest')
                     }
