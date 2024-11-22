@@ -10,7 +10,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build('linuxapp:latest')
+                    docker.build('linuxapp:latest', '-f linux-app/dockerfile .')
                 }
             }
         }
