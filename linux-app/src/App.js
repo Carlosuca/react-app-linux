@@ -48,7 +48,7 @@ function App() {
             <p>{jugador.descripcion}</p>
             {detallesVisibles[index] && <p className="detalles">{jugador.detalles}</p>}
             <button onClick={() => toggleDetalles(index)}>
-              {detallesVisibles[index] ? "Ver menos" : "Ver más"}
+              {detallesVisibles[index] ? "Ver menos" : "Ver mas"}
             </button>
           </div>
         ))}
