@@ -14,9 +14,18 @@ pipeline {
                 }
             }
         }
-        stage('Run Tests') {
-            steps {
-                sh 'docker run --rm linuxapp:latest npm test -- --watchAll=false'
+        stage('Test') {
+            parallel {
+                stage('Unit Tests') {
+                    steps {
+                        sh 'npm run test:unit'
+            }
+        }
+        stage('Integration Tests') {
+                    steps {
+                        sh 'npm run test:integration'
+                    }
+                }
             }
         }
         stage('Deploy to DigitalOcean') {
