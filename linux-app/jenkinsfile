@@ -34,5 +34,6 @@ pipeline {
                     echo 'Contenedor desplegado correctamente.'
                 }
             }
-}
+        }
+    }
 }
