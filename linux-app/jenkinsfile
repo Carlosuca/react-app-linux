@@ -16,7 +16,7 @@ pipeline {
         }
         stage('Run Tests') {
             steps {
-                sh 'docker run --rm linuxapp:latest npm test -- --watch=false'
+                sh 'docker run --rm linuxapp:latest npm test -- --watchAll=false'
             }
         }
         stage('Deploy to DigitalOcean') {
