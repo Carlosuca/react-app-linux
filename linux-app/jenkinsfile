@@ -1,12 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        DOCKER_IMAGE = 'carlosm011/linuxapp:latest' // Imagen Docker que subes a Docker Hub
-        DROPLET_IP = '64.227.110.97'               // IP del Droplet en DigitalOcean
-        DO_USER = 'root'                           // Usuario SSH para el Droplet
-    }
-
     stages {
         stage('Clone repository') {
             steps {
@@ -22,43 +16,24 @@ pipeline {
         }
         stage('Run Tests') {
             steps {
-                sh 'docker run --rm linuxapp:latest npm test -- --watchAll=false'
+                sh 'docker run --rm linuxapp:latest npm test -- '
             }
         }
         stage('Deploy to DigitalOcean') {
             steps {
                 script {
-                    // Autenticar en Docker Hub y subir la imagen
+                    echo 'Autenticando en Docker Hub...'
                     docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credentials') {
                         echo 'Subiendo imagen a Docker Hub...'
                         docker.image('linuxapp:latest').push('latest')
+                        echo 'Imagen subida correctamente.'
                     }
-
-                    // Conectarse al Droplet y ejecutar los comandos para el despliegue
-                    echo 'Conectando al Droplet de DigitalOcean...'
-                    sh """
-                        ssh -o StrictHostKeyChecking=no ${DO_USER}@${DROPLET_IP} << 'EOF'
-                            echo 'Descargando la imagen desde Docker Hub...'
-                            docker pull ${DOCKER_IMAGE}
-                            echo 'Deteniendo y eliminando cualquier contenedor previo...'
-                            docker stop linuxapp || true
-                            docker rm linuxapp || true
-                            echo 'Iniciando el nuevo contenedor...'
-                            docker run -d --name linuxapp -p 80:80 ${DOCKER_IMAGE}
-                            echo 'Despliegue completado.'
-                        EOF
-                    """
+                    echo 'Descargando e iniciando contenedor desde Docker Hub...'
+                    sh 'docker pull carlosm011/linuxapp:latest'
+                    sh 'docker run -d -p 80:80 carlosm011/linuxapp:latest'
+                    echo 'Contenedor desplegado correctamente.'
                 }
             }
-        }
-    }
-
-    post {
-        success {
-            echo 'Pipeline ejecutado con éxito y aplicación desplegada.'
-        }
-        failure {
-            echo 'Hubo un error durante la ejecución del pipeline.'
         }
     }
 }
