@@ -10,13 +10,13 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build('linuxapp:latest', '-f linux-app/dockerfile .')
+                    docker.build('linuxapp:v1', '-f linux-app/dockerfile .')
                 }
             }
         }
         stage('Run Tests') {
             steps {
-                sh 'docker run --rm linuxapp:latest npm test -- --watchAll=false'
+                sh 'docker run --rm linuxapp:v1 npm test -- --watchAll=false'
             }
         }
         stage('Deploy to DigitalOcean') {
@@ -25,12 +25,12 @@ pipeline {
                     echo 'Autenticando en Docker Hub...'
                     docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credentials') {
                         echo 'Subiendo imagen a Docker Hub...'
-                        docker.image('linuxapp:latest').push('latest')
+                        docker.image('linuxapp:v1').push('latest')
                         echo 'Imagen subida correctamente.'
                     }
                     echo 'Descargando e iniciando contenedor desde Docker Hub...'
-                    sh 'docker pull carlosm011/linuxapp:latest'
-                    sh 'docker run -d -p 80:80 carlosm011/linuxapp:latest'
+                    sh 'docker pull carlosm011/linuxapp:v1'
+                    sh 'docker run -d -p 80:80 carlosm011/linuxapp:v1'
                     echo 'Contenedor desplegado correctamente.'
                 }
             }
