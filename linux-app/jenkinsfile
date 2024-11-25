@@ -30,7 +30,7 @@ pipeline {
                     }
                     echo 'Descargando e iniciando contenedor desde Docker Hub...'
                     sh 'docker pull carlosm011/linuxapp:v2'
-                    sh 'docker run -d -p 3009:8080 carlosm011/linuxapp:v2'
+                    sh 'docker run -d -p 3002:3000 carlosm011/linuxapp:v2'
                     echo 'Contenedor desplegado correctamente.'
                 }
             }
