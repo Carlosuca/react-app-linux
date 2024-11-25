@@ -22,12 +22,17 @@ pipeline {
         stage('Deploy to DigitalOcean') {
             steps {
                 script {
-            
-                    sh 'echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin'
-                    docker.image('carlosm011/linuxapp:latest').push('latest')
+                    echo 'Autenticando en Docker Hub...'
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credentials') {
+                        echo 'Subiendo imagen a Docker Hub...'
+                        docker.image('carlosm011/linuxapp:latest').push('latest')
+                        echo 'Imagen subida correctamente.'
+                    }
+                    echo 'Descargando e iniciando contenedor desde Docker Hub...'
+                    sh 'docker pull carlosm011/linuxweb:latest'
+                    sh 'docker run -d -p 80:80 carlosm011/linuxweb:latest'
+                    echo 'Contenedor desplegado correctamente.'
                 }
-                sh 'docker pull carlosm011/linuxapp:latest && docker run -d -p 80:80 carlosm011/linuxapp:latest'
             }
-        }
-    }
+}
 }
