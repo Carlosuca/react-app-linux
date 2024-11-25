@@ -23,12 +23,6 @@ function App() {
       detalles: "Recordado por el 'Gol del Siglo' contra Inglaterra y su paso por clubes como Napoli y Barcelona.",
       imagen: "https://hips.hearstapps.com/hmg-prod/images/muere-maradona-1606326764.jpg?crop=0.845xw:1.00xh;0.0783xw,0&resize=640:*"
     },
-    {
-      nombre: "Cristiano Ronaldo",
-      descripcion: "Una máquina de goles, ganador de múltiples Balones de Oro y títulos con varios clubes europeos.",
-      detalles: "Ha jugado en el Manchester United, Real Madrid, Juventus y ahora en Al-Nassr, con récords de goles en la Champions.",
-      imagen: "https://img.asmedia.epimg.net/resizer/v2/NJ7KAGQD6S7SESSOVBPSFWIXXY.jpg?auth=b67979cf13e7b2b4e7e6589e408d6bcf7dfaf91eb9821c5f13e09cce0624ab2c&width=1200&height=1200&focal=1351%2C524"
-    }
   ];
 
   const toggleDetalles = (index) => {
