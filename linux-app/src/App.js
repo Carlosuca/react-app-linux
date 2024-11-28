@@ -8,22 +8,23 @@ function App() {
     {
       nombre: "Lionel Messi",
       descripcion: "Considerado como el mejor jugador de la historia. Ha ganado múltiples Balones de Oro y Champions League.",
-      detalles: "Ha jugado principalmente en Barcelona y actualmente en Inter Miami. Además, es campeón mundial con Argentina en 2022.",
       imagen: "https://upload.wikimedia.org/wikipedia/commons/b/b4/Lionel-Messi-Argentina-2022-FIFA-World-Cup_%28cropped%29.jpg"
     },
     {
       nombre: "Pelé",
       descripcion: "Conocido como 'O Rei', Pelé es una leyenda del fútbol brasileño y tres veces campeón del mundo.",
-      detalles: "Marcó más de 1,000 goles en su carrera y fue un ícono dentro y fuera del campo por su labor humanitaria.",
       imagen: "https://www.clarin.com/2022/10/21/SsSA8miEa_2000x1500__1.jpg"
     },
     {
       nombre: "Diego Maradona",
       descripcion: "Famoso por su habilidad con el balón, Maradona llevó a Argentina a la victoria en la Copa Mundial de 1986.",
-      detalles: "Recordado por el 'Gol del Siglo' contra Inglaterra y su paso por clubes como Napoli y Barcelona.",
       imagen: "https://hips.hearstapps.com/hmg-prod/images/muere-maradona-1606326764.jpg?crop=0.845xw:1.00xh;0.0783xw,0&resize=640:*"
     },
-
+    {
+      nombre: "Cristiano Ronaldo",
+      descripcion: "Una máquina de goles, ganador de múltiples Balones de Oro y títulos con varios clubes europeos.",
+      imagen: "https://img.asmedia.epimg.net/resizer/v2/NJ7KAGQD6S7SESSOVBPSFWIXXY.jpg?auth=b67979cf13e7b2b4e7e6589e408d6bcf7dfaf91eb9821c5f13e09cce0624ab2c&width=1200&height=1200&focal=1351%2C524"
+    }
   ];
 
   const toggleDetalles = (index) => {
@@ -42,9 +43,6 @@ function App() {
             <h2>{jugador.nombre}</h2>
             <p>{jugador.descripcion}</p>
             {detallesVisibles[index] && <p className="detalles">{jugador.detalles}</p>}
-            <button onClick={() => toggleDetalles(index)}>
-              {detallesVisibles[index] ? "Ver menos" : "Ver mas"}
-            </button>
           </div>
         ))}
       </div>
