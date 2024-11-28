@@ -11,11 +11,8 @@ describe('App Component', () => {
 
   test('all players in the list have a name', () => {
     render(<App />);
-
-    // Obtener todos los jugadores renderizados
+    
     const jugadores = screen.getAllByRole('heading', { level: 2 });
-
-    // Verificar que cada jugador tiene un nombre
     jugadores.forEach((jugador) => {
       expect(jugador.textContent).not.toBe('');
     });
